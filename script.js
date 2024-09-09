@@ -1,17 +1,33 @@
 document.getElementById('loveForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
-    // Get the names from input fields
-    const name1 = document.getElementById('name1').value.trim().toLowerCase();
-    const name2 = document.getElementById('name2').value.trim().toLowerCase();
+    const actionButton = document.getElementById('actionButton');
+    const isReset = actionButton.textContent === 'Reset';
 
-    // Calculate love percentage
-    const lovePercentage = calculateLovePercentage(name1, name2);
+    if (isReset) {
+        // Reset the form and hide the result
+        document.getElementById('name1').value = '';
+        document.getElementById('name2').value = '';
+        document.getElementById('result').classList.add('hidden');
 
-    // Show the result
-    document.getElementById('lovePercentage').textContent = `Love Compatibility: ${lovePercentage}%`;
-    document.getElementById('message').textContent = generateMessage(lovePercentage);
-    document.getElementById('result').classList.remove('hidden');
+        // Change button text back to "Calculate"
+        actionButton.textContent = 'Calculate';
+    } else {
+        // Get the names from input fields
+        const name1 = document.getElementById('name1').value.trim().toLowerCase();
+        const name2 = document.getElementById('name2').value.trim().toLowerCase();
+
+        // Calculate love percentage
+        const lovePercentage = calculateLovePercentage(name1, name2);
+
+        // Show the result
+        document.getElementById('lovePercentage').textContent = `Love Compatibility: ${lovePercentage}%`;
+        document.getElementById('message').textContent = generateMessage(lovePercentage);
+        document.getElementById('result').classList.remove('hidden');
+
+        // Change button text to "Reset"
+        actionButton.textContent = 'Reset';
+    }
 });
 
 function calculateLovePercentage(name1, name2) {
